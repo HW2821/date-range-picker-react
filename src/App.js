@@ -4,11 +4,11 @@ import styled from "styled-components"
 import DateRangePicker from "./components/DateRangePicker"
 
 const Container = styled.div`
-  padding: 1rem;
   display: flex;
   flex-direction: column;
-  place-items: center;
-  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
 `
 
 function App() {

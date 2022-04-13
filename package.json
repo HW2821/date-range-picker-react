@@ -2,7 +2,7 @@
   "name": "date-range-picker-react",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://{hw2821}.github.io",
+  "homepage": "https://hw2821.github.io/date-range-picker-react",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^12.1.4",

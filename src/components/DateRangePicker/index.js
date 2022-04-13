@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react"
 import styled from "styled-components"
 import ArrowIcon from "./ArrowIcon"
-import Bar from "./Bar"
 import CalenDarIcon from "./CalendarIcon"
 import Input from "./Input"
 import Panel from "./Panel"
@@ -18,19 +17,33 @@ const Container = styled.div`
 `
 export const DateContext = React.createContext()
 
-export default function () {
+export default function ({ onChange }) {
   const [firstDate, setFirstDate] = useState(null)
   const [secondDate, setSecondDate] = useState(null)
+  const [hoverDate, setHoverDate] = useState(null)
   const [show, setShow] = useState(false)
   const [focus, setFocus] = useState("l")
   const [closeBtn, setCloseBtn] = useState(false)
 
-  const contextValue = { firstDate, setFirstDate, secondDate, setSecondDate, focus, setFocus, show, setShow }
-
+  const contextValue = {
+    firstDate,
+    setFirstDate,
+    secondDate,
+    setSecondDate,
+    focus,
+    setFocus,
+    show,
+    setShow,
+    setHoverDate,
+  }
+  const inputProps = { focus, setFocus, show, hoverDate, setHoverDate }
   const picker = useRef()
 
   useEffect(() => {
-    firstDate && secondDate && setShow(false)
+    if (firstDate && secondDate) {
+      setShow(false)
+      onChange && onChange([firstDate, secondDate])
+    }
   }, [firstDate, secondDate])
 
   useEffect(() => {
@@ -46,7 +59,6 @@ export default function () {
     return () => (window.onclick = null)
   }, [show])
 
-  const inputProps = { focus, setFocus, show }
   return (
     <Container
       ref={picker}

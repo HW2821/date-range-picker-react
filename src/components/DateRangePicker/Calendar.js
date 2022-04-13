@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import styled from "styled-components"
-import { previousSunday, startOfMonth, format, add } from "date-fns"
+import { previousSunday, startOfMonth, format, add, isSunday } from "date-fns"
 import { HiChevronDoubleLeft, HiChevronDoubleRight } from "react-icons/hi"
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io"
 import { Tile } from "./Tile"
@@ -46,36 +46,22 @@ const Icon = styled.div`
 const Body = styled.div`
   padding: 1rem;
 `
+
 const Table = styled.table`
   width: 100%;
   tr {
     display: flex;
     justify-content: space-evenly;
-    margin-top: 0.5em;
   }
 
-  td,
   th {
     flex: 1;
     font-weight: normal;
-  }
-
-  th {
     color: #298591;
-  }
-
-  td {
-    display: flex;
-    place-content: center;
-    cursor: pointer;
-  }
-
-  td:hover div {
-    background-color: #f1f1f1;
   }
 `
 
-export default function Calendar({ anchorDate = Date.now(), left, right, changeDate }) {
+export default function Calendar({ anchorDate, left, right, changeDate }) {
   const [hoverDate, setHoverDate] = useState()
 
   const dates = getDateArray(anchorDate)
@@ -83,7 +69,7 @@ export default function Calendar({ anchorDate = Date.now(), left, right, changeD
     dates.map((row, i) => (
       <tr key={i}>
         {row.map((date, i) => {
-          const props = { date, anchorDate, hoverDate, setHoverDate }
+          const props = { date, anchorDate, hoverDate, setHoverDate, changeDate }
           return <Tile {...props} key={i} />
         })}
       </tr>
@@ -148,7 +134,7 @@ const TableHeader = () => (
 
 const getDateArray = (date) => {
   const firstDayofMonth = startOfMonth(date)
-  const StartSunday = previousSunday(firstDayofMonth)
+  const StartSunday = isSunday(firstDayofMonth) ? firstDayofMonth : previousSunday(firstDayofMonth)
 
   const arr = [[StartSunday]]
   let prev = StartSunday

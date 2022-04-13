@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react"
 import styled from "styled-components"
 import { DateContext } from "."
 import { format } from "date-fns"
+import { keyframes } from "styled-components"
 const Container = styled.div`
   margin: 1rem;
   flex: 1;
@@ -12,6 +13,11 @@ const Input = styled.input`
   all: unset;
   width: 100%;
 `
+const fade = keyframes`
+  to {
+    opacity:1;
+  }
+`
 
 const Bar = styled.div`
   position: absolute;
@@ -19,13 +25,16 @@ const Bar = styled.div`
   top: 105%;
   height: 3px;
   background-color: #4bafbc;
-  transform: translateX(${(p) => (p.focus === "l" ? "0" : "calc(100% + 3rem)")});
   transition: all 0.5s ease;
   display: ${(p) => !p.show && "none"};
+  opacity: 0;
+  animation: ${fade} 0.5s ease forwards;
+  transform: translateX(${(p) => (p.focus === "l" ? "0" : "calc(100% + 3rem)")});
 `
 
-export default function ({ hoverDate, start, end, bar, focus, setFocus, show }) {
+export default function ({ hoverDate, start, end, focus, setFocus, show }) {
   const [dateValue, setDateValue] = useState("")
+  const [placeholder, setPlaceholder] = useState("")
   const { firstDate, secondDate } = useContext(DateContext)
   const inputRef = useRef()
 
@@ -44,15 +53,19 @@ export default function ({ hoverDate, start, end, bar, focus, setFocus, show }) 
     end && focus === "r" && inputRef.current.focus()
   }, [focus])
 
+  useEffect(() => {
+    if (hoverDate) {
+      start && focus === "l" && setPlaceholder(hoverDate)
+      end && focus === "r" && setPlaceholder(hoverDate)
+    } else {
+      start && setPlaceholder("Start date")
+      end && setPlaceholder("End date")
+    }
+  }, [hoverDate])
+
   return (
     <Container>
-      <Input
-        ref={inputRef}
-        onFocus={handleFocus}
-        readOnly
-        placeholder={hoverDate || (start && "Start Date") || (end && "End Date")}
-        value={dateValue}
-      />
+      <Input ref={inputRef} onFocus={handleFocus} readOnly placeholder={placeholder} value={dateValue} />
       {start && <Bar focus={focus} show={show} />}
     </Container>
   )

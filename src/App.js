@@ -1,6 +1,4 @@
-import "./App.css"
 import styled from "styled-components"
-
 import DateRangePicker from "./components/DateRangePicker"
 
 const Container = styled.div`

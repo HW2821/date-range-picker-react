@@ -13,6 +13,7 @@ const Input = styled.input`
   all: unset;
   width: 100%;
 `
+
 const fade = keyframes`
   to {
     opacity:1;
@@ -26,6 +27,7 @@ const Bar = styled.div`
   height: 3px;
   background-color: #4bafbc;
   transition: all 0.5s ease;
+  border-radius: 1px;
   display: ${(p) => !p.show && "none"};
   opacity: 0;
   animation: ${fade} 0.5s ease forwards;
@@ -55,8 +57,8 @@ export default function ({ hoverDate, start, end, focus, setFocus, show }) {
 
   useEffect(() => {
     if (hoverDate) {
-      start && focus === "l" && setPlaceholder(hoverDate)
-      end && focus === "r" && setPlaceholder(hoverDate)
+      start && focus === "l" && setPlaceholder(format(hoverDate, "yyyy-MM-dd"))
+      end && focus === "r" && setPlaceholder(format(hoverDate, "yyyy-MM-dd"))
     } else {
       start && setPlaceholder("Start date")
       end && setPlaceholder("End date")

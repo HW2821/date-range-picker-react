@@ -13,7 +13,16 @@ const Container = styled.div`
   align-items: center;
   border: 1px solid lightgray;
   border-radius: 5px;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  transition: all 250ms ease;
+
+  &:hover {
+    border: 1px solid rgba(17, 130, 128, 0.488);
+    box-shadow: rgba(17, 130, 128, 0.2) 0px 2px 8px 0px;
+
+    svg {
+      color: rgb(3, 113, 112);
+    }
+  }
 `
 export const DateContext = React.createContext()
 
@@ -34,6 +43,7 @@ export default function ({ onChange }) {
     setFocus,
     show,
     setShow,
+    hoverDate,
     setHoverDate,
   }
   const inputProps = { focus, setFocus, show, hoverDate, setHoverDate }
@@ -55,7 +65,6 @@ export default function ({ onChange }) {
       setFirstDate(null)
       setSecondDate(null)
     }
-
     return () => (window.onclick = null)
   }, [show])
 

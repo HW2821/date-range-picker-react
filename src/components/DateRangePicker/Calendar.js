@@ -62,14 +62,12 @@ const Table = styled.table`
 `
 
 export default function Calendar({ anchorDate, left, right, changeDate }) {
-  const [hoverDate, setHoverDate] = useState()
-
   const dates = getDateArray(anchorDate)
   const makeTiles = () =>
     dates.map((row, i) => (
       <tr key={i}>
         {row.map((date, i) => {
-          const props = { date, anchorDate, hoverDate, setHoverDate, changeDate }
+          const props = { date, anchorDate, changeDate }
           return <Tile {...props} key={i} />
         })}
       </tr>

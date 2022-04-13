@@ -17,7 +17,7 @@ function App() {
   return (
     <Container>
       <DatePicker.RangePicker />
-      <DateRangePicker />
+      <DateRangePicker onChange={(arr) => console.log(arr)} />
     </Container>
   )
 }

@@ -2,6 +2,18 @@ import React, { useState } from "react"
 import styled from "styled-components"
 import Calendar from "./Calendar"
 import { addMonths, subMonths, addYears, subYears } from "date-fns"
+import { keyframes } from "styled-components"
+
+const panelShow = keyframes`
+    from {
+        transform: translateY(-10%);
+        transform-origin: top;
+        opacity: 0;
+    } to {
+        transform: none;
+        opacity: 1;
+    }
+`
 
 const Container = styled.div`
   position: absolute;
@@ -11,6 +23,7 @@ const Container = styled.div`
   width: 170%;
   border: 1px solid rgba(174, 174, 174, 0.168);
   box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  animation: ${panelShow} 0.3s ease forwards;
 `
 
 export default function Panel({ show }) {
